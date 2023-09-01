@@ -10,57 +10,33 @@ import org.springframework.stereotype.Component;
 @Component
 @Primary
 public class AcervoJDBCImpl implements IAcervoRepository {
- 
-    private List<Livro> livros;
+    private JdbcTemplate jdbcTemplate;
 
-    public AcervoJDBCImpl(){
-        livros = new LinkedList<>();
-
-        livros.add(new Livro(10,"Introdução ao Java","Huguinho Pato",2022));
-        livros.add(new Livro(20,"Introdução ao Spring-Boot","Zezinho Pato",2020));
-        livros.add(new Livro(15,"Principios SOLID","Luizinho Pato",2023));
-        livros.add(new Livro(17,"Padroes de Projeto","Lala Pato",2019));
+    @Autowired
+    public AcervoJDBCImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public List<Livro>getAll(){  return livros; }
+    public List<Livro> getAll() {
+        List<Livro> resp = this.jdbcTemplate.query("SELECT * from livros",
+                (rs, rowNum) ->
+                        new Livro(rs.getLong("codigo"), rs.getString("titulo"), rs.getString("autor"), rs.getInt("ano")));
+        return resp;
+    }
 
     @Override
-    public boolean cadastraLivroNovo(Livro livro) {
-        livros.add(livro);
+    public boolean removeLivro(long codigo) {
+        String sql = "DELETE FROM livros WHERE id = " + codigo;
+        this.jdbcTemplate.batchUpdate(sql);
         return true;
     }
 
     @Override
-    public boolean removeLivro(int codigo) {
-        List<Livro> tmp = livros.stream()
-            .filter(livro->livro.codigo() == codigo)
-            .toList();
-        return tmp.removeAll(tmp);
-    }
-
-    @Override
-    public Livro getPorId(int id){
-        Livro matchingObject = livros.stream()
-            .filter(livro->livro.codigo() == id).findAny().orElse(null);
-       return matchingObject;     
-    };
-
-    @Override
-    public List<Livro> getAutor(String autor){
-        return livros.stream()
-            .filter(livro->livro.autor() == autor)
-            .toList();
-    };
-
-
-    public Livro getTitulo(String titulo){
-        Livro matchingObject = livros.stream()
-            .filter(livro->livro.titulo() == titulo).findAny().orElse(null);
-       return matchingObject;
-    } 
-
-    public List<Livro> getAno(int ano){
-        return livros;
+    public boolean cadastraLivroNovo(Livro livro) {
+        this.jdbcTemplate.update(
+                "INSERT INTO livros(codigo,titulo,autor,ano) VALUES (?,?,?,?)",
+                livro.codigo(), livro.titulo(), livro.autor(), livro.ano());
+        return true;
     }
 }
