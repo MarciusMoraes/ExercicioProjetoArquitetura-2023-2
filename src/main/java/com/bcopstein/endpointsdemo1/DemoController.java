@@ -37,13 +37,14 @@ public class DemoController {
         return acervo.getAll();
     }
 
+    @GetMapping("/tituloAutor")
+    @CrossOrigin(origins = "*")
+    public List<Livro> getAutor(@RequestParam(value = "autor") String autor){
+        return acervo.getAutor(autor);
+    }
 
     /* 
-    @GetMapping("/autores")
-    @CrossOrigin(origins = "*")
-    public List<Livro> getAutor(){
-        return acervo.getAutor("");
-    }
+    
 
     @GetMapping("/titulos")
     @CrossOrigin(origins = "*")

@@ -18,6 +18,7 @@ public class AcervoMemorialImpl implements IAcervoRepository {
         livros.add(new Livro(17,"Padroes de Projeto","Lala Pato",2019));
     }
 
+    
     @Override
     public List<Livro>getAll(){  return livros; }
 
@@ -37,18 +38,24 @@ public class AcervoMemorialImpl implements IAcervoRepository {
 
     @Override
     public Livro getPorId(int id){
-        return livros.get(id);
+        Livro matchingObject = livros.stream()
+            .filter(livro->livro.codigo() == id).findAny().orElse(null);
+       return matchingObject;     
     };
 
     @Override
     public List<Livro> getAutor(String autor){
-        return livros;
+        return livros.stream()
+            .filter(livro->livro.autor() == autor)
+            .toList();
     };
 
 
-    public List<Livro> getTitulo(String titulo){
-        return livros;
-    }
+    public Livro getTitulo(String titulo){
+        Livro matchingObject = livros.stream()
+            .filter(livro->livro.titulo() == titulo).findAny().orElse(null);
+       return matchingObject;
+    } 
 
     public List<Livro> getAno(int ano){
         return livros;

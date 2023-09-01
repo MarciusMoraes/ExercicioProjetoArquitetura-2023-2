@@ -41,7 +41,9 @@ public class AcervoJDBCImpl implements IAcervoRepository {
 
     @Override
     public Livro getPorId(int id){
-        return livros.get(id);
+        Livro matchingObject = livros.stream()
+            .filter(livro->livro.codigo() == id).findAny().orElse(null);
+       return matchingObject;     
     };
 
     @Override
@@ -53,9 +55,10 @@ public class AcervoJDBCImpl implements IAcervoRepository {
 
 
     public Livro getTitulo(String titulo){
-        return livros.stream()
-            .filter(livro->livro.titulo() == titulo);
-    }
+        Livro matchingObject = livros.stream()
+            .filter(livro->livro.titulo() == titulo).findAny().orElse(null);
+       return matchingObject;
+    } 
 
     public List<Livro> getAno(int ano){
         return livros;
