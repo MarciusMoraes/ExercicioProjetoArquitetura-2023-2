@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/biblioteca")
 public class DemoController {
-    private Acervo acervo;
+    private IAcervoRepository acervo;
 
     @Autowired
-    public DemoController(Acervo acervo) {
+    public DemoController(IAcervoRepository acervo) {
         this.acervo = acervo;
     }
 
@@ -37,10 +37,12 @@ public class DemoController {
         return acervo.getAll();
     }
 
+
+    /* 
     @GetMapping("/autores")
     @CrossOrigin(origins = "*")
-    public Set<String> getAutores(){
-        return acervo.getAutores();
+    public List<Livro> getAutor(){
+        return acervo.getAutor("");
     }
 
     @GetMapping("/titulos")
@@ -71,5 +73,5 @@ public class DemoController {
     @GetMapping("/desatualizados")
     public Set<Livro> getDesatualizadoAno(@RequestParam(value = "ano") int ano) {
         return acervo.getDesatualizadoAno(ano);
-    }
-}
+    }  */
+}  
