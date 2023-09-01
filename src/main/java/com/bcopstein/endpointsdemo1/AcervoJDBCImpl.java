@@ -46,12 +46,15 @@ public class AcervoJDBCImpl implements IAcervoRepository {
 
     @Override
     public List<Livro> getAutor(String autor){
-        return livros;
+        return livros.stream()
+            .filter(livro->livro.autor() == autor)
+            .toList();
     };
 
 
-    public List<Livro> getTitulo(String titulo){
-        return livros;
+    public Livro getTitulo(String titulo){
+        return livros.stream()
+            .filter(livro->livro.titulo() == titulo);
     }
 
     public List<Livro> getAno(int ano){
