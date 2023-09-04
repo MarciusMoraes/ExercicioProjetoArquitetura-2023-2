@@ -39,40 +39,89 @@ public class DemoController {
 
     @GetMapping("/tituloAutor")
     @CrossOrigin(origins = "*")
-    public List<Livro> getAutor(@RequestParam(value = "autor") String autor){
+    public List<Livro> getAutor(@RequestParam(value = "autor") String autor) {
         return acervo.getAutor(autor);
     }
 
-    /* 
-    
-
-    @GetMapping("/titulos")
+    @GetMapping("/removeLivro")
     @CrossOrigin(origins = "*")
-    public List<String> getTitulos(){
-        return acervo.getTitulos();
+    public Boolean removeLivro(@RequestParam(value = "codigo") int codigo) {
+        return acervo.removeLivro(codigo);
     }
 
     @GetMapping("/autoresAno")
     @CrossOrigin(origins = "*")
-    public Set<String> getAutoresAno(@RequestParam(value = "ano") int ano) {
-        return acervo.getAutoresAno(ano);
-    }
-
-    @GetMapping("/tituloAutor/{autor}/ano/{ano}")
-    @CrossOrigin(origins = "*")
-    public List<String> getTitulosAutorAno(@PathVariable(value = "autor") String autor,
-                                            @PathVariable(value = "ano") int ano) {
-            return acervo.getTitulosAutorAno(autor, ano);
-    } 
-
-    @GetMapping("/criaLivro")
-    public boolean criaLivroNovo(@RequestBody() Livro livro) {
-        acervo.criaLivroNovo(livro);
-        return true;
+    public List<Livro> getAno(@RequestParam(value = "ano") int ano) {
+        return acervo.getAno(ano);
     }
 
     @GetMapping("/desatualizados")
-    public Set<Livro> getDesatualizadoAno(@RequestParam(value = "ano") int ano) {
+    @CrossOrigin(origins = "*")
+    public List<Livro> getDesatualizadoAno(@RequestParam(value = "ano") int ano) {
         return acervo.getDesatualizadoAno(ano);
-    }  */
-}  
+    }
+
+    @GetMapping("/getId")
+    @CrossOrigin(origins = "*")
+    public Livro getPorId(@RequestParam(value = "id") int id) {
+        return acervo.getPorId(id);
+    }
+
+    @GetMapping("/titulo")
+    @CrossOrigin(origins = "*")
+    public Livro getTitulo(@RequestParam(value = "titulo") String titulo) {
+        return acervo.getTitulo(titulo);
+    }
+
+    @GetMapping("/obrasPorAutor")
+    @CrossOrigin(origins = "*")
+    public int obrasAutor(@RequestParam(value = "autor") String autor) {
+        return acervo.obrasAutor(autor);
+    }
+
+    @GetMapping("/atualizadosAno")
+    @CrossOrigin(origins = "*")
+    public int atualizadosAno(@RequestParam(value = "ano") int ano) {
+        return acervo.atualizadosAno(ano);
+    }
+
+    @GetMapping("/mediaObrasAutor")
+    @CrossOrigin(origins = "*")
+    public double mediaObrasAutor(@RequestParam(value = "autor") String autor) {
+        return acervo.mediaObrasAutor(autor);
+    }
+    /*
+     * 
+     * 
+     * @GetMapping("/titulos")
+     * 
+     * @CrossOrigin(origins = "*")
+     * public List<String> getTitulos(){
+     * return acervo.getTitulos();
+     * }
+     * 
+     * @GetMapping("/autoresAno")
+     * 
+     * @CrossOrigin(origins = "*")
+     * public Set<String> getAutoresAno(@RequestParam(value = "ano") int ano) {
+     * return acervo.getAutoresAno(ano);
+     * }
+     * 
+     * @GetMapping("/tituloAutor/{autor}/ano/{ano}")
+     * 
+     * @CrossOrigin(origins = "*")
+     * public List<String> getTitulosAutorAno(@PathVariable(value = "autor") String
+     * autor,
+     * 
+     * @PathVariable(value = "ano") int ano) {
+     * return acervo.getTitulosAutorAno(autor, ano);
+     * }
+     * 
+     * @GetMapping("/criaLivro")
+     * public boolean criaLivroNovo(@RequestBody() Livro livro) {
+     * acervo.criaLivroNovo(livro);
+     * return true;
+     * }
+     * 
+     */
+}
